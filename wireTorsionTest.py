@@ -158,7 +158,7 @@ with open(testName+"/"+testName+".log","w") as testFile:
         #plt.plot(counter,torqueVals)
         #plt.plot(counter, degVals) # for debugging angleVals
         plt.pause(0.001)
-        testFile.write(str(tCount)+"\t"+str(angleVals[-1])+"\t\t"+str(degVals[-1])+"\t\t"+str(currentDeg)+"\t\t"+str(torqueVals[-1])+"\t"+torqueUnits[-1]+"\t\t"+str(getSpeed(angleVals,timeVals))+"\n")
+        testFile.write(str(tCount)+"\t"+str(angleVals[-1])+"\t"+str(degVals[-1])+"\t"+str(currentDeg)+"\t"+str(torqueVals[-1])+"\t"+torqueUnits[-1]+"\t"+str(getSpeed(angleVals,timeVals))+"\n")
         #print(angleVals[-1])
         #print(revCount)
         tCount += 1
