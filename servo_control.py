@@ -13,7 +13,7 @@ class BusServo():
         self._ser = serial.Serial(
             port = self.__com_port,
             baudrate = 115200,
-            timeout=1
+            timeout=None
         )
 
     def writeCommand(self, cmd, par1 = None, par2 = None):
@@ -43,25 +43,24 @@ class BusServo():
         self._ser.write(buf)
 
     def commandPosition(self, angle, time):
-        """goes to set angle (0-240 deg) smoothly in set tim (ms)"""
+        """goes to set angle (0-240 deg) smoothly in set time (ms)"""
         pos = int(1000 * angle / 240)
+        self.writeCommand(29, par1 = 0, par2 =  0)  #go back into servo mode
         self.writeCommand(1, par1 = pos, par2 = time)
 
     def commandSpeed(self, speed):
         """starts rotating at speed -1000 to 1000"""
         self.writeCommand(29, par1 = 1, par2 = speed)
 
-
     def readPosition(self):
         """request servo position and return value"""
         pos = None
-        #req_time = time.time()
         self.writeCommand(28)
         #time.sleep(0.005)
-        recv_data = self._ser.readline()
+        expected_bytes = 8
+        recv_data = self._ser.read(expected_bytes)
         if recv_data[0] == 0x55 and recv_data[1] == 0x55 and recv_data[4] == 0x1C :
             pos = int.from_bytes(recv_data[5:7], byteorder = 'little', signed = True)
-            #print(f'recv delay: {time.time() - req_time}')
             return pos
 
     
