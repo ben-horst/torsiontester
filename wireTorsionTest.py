@@ -1,3 +1,8 @@
+''' code to run wire torsion tester setup '''
+''' jessica zhang + ben horst @ powertrain - battery test'''
+''' uses Ben Horst's libraries (mtt03, servo_control)'''
+''' need to modify x2 COM ports for torque gauge and servo '''
+
 import time
 from datetime import datetime
 import os
@@ -5,8 +10,6 @@ import matplotlib.pyplot as plt
 import mtt03
 import servo_control
 import keyboard
-import threading
-import queue
 
 def getNow():
     n = datetime.now()
@@ -105,7 +108,7 @@ torqueVals = [float(startTorque.split()[0])]
 torqueUnits = [startTorque.split()[1]]
 timeVals = [0]
 
-servo = servo_control.BusServo('COM6', 1) # setup servo - CHANGE COM PORT WHEN NECESSARY
+servo = servo_control.BusServo('COM4', 1) # setup servo - CHANGE COM PORT WHEN NECESSARY
 startPos = servo.readPosition()
 startDeg = servoDeg(startPos)
 print("Start Position: "+str(startPos))
